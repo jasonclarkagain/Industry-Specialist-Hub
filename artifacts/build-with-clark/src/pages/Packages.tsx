@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Check, ArrowLeft, Loader2, Star, Zap, Shield } from "lucide-react";
+import { Check, ArrowLeft, Loader2, Star, Zap, Shield, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "wouter";
+import { useTheme } from "@/hooks/use-theme";
 
 type Price = {
   id: string;
@@ -215,6 +216,8 @@ export function Packages() {
     }
   }
 
+  const { theme, toggle } = useTheme();
+
   const websiteProducts = products.filter(
     (p) => p.metadata?.category === "website",
   );
@@ -228,16 +231,25 @@ export function Packages() {
       <div className="bg-primary text-primary-foreground pt-16 pb-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_#fff_0%,_transparent_60%)]" />
         <div className="container max-w-4xl mx-auto relative z-10">
-          <Link href="/">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10 mb-8 -ml-2"
+          <div className="flex items-center justify-between mb-8">
+            <Link href="/">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10 -ml-2"
+              >
+                <ArrowLeft className="mr-1.5 h-4 w-4" />
+                Back to home
+              </Button>
+            </Link>
+            <button
+              onClick={toggle}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="p-2 rounded-full text-primary-foreground/70 hover:text-primary-foreground hover:bg-primary-foreground/10 transition-colors"
             >
-              <ArrowLeft className="mr-1.5 h-4 w-4" />
-              Back to home
-            </Button>
-          </Link>
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+          </div>
           <div className="inline-flex items-center gap-2 bg-primary-foreground/10 rounded-full px-4 py-1.5 text-sm font-semibold mb-5">
             <Star className="h-4 w-4 text-secondary" />
             Clear, honest pricing

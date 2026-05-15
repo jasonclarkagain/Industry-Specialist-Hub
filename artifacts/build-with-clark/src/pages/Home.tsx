@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, Monitor, Phone, Wrench, ShieldCheck, Mail, ArrowRight, Zap, ShoppingCart, Bot, Smartphone, Database, Globe } from "lucide-react";
+import { CheckCircle2, Monitor, Phone, Wrench, ShieldCheck, Mail, ArrowRight, Zap, ShoppingCart, Bot, Smartphone, Database, Globe, Sun, Moon } from "lucide-react";
+import { useTheme } from "@/hooks/use-theme";
 
 import { PreviewGenerator } from "@/components/PreviewGenerator";
 import { HeroScene } from "@/components/HeroScene";
@@ -84,6 +85,8 @@ export function Home() {
     }
   };
 
+  const { theme, toggle } = useTheme();
+
   return (
     <div className="flex flex-col min-h-screen bg-background font-sans text-foreground">
       {/* Header */}
@@ -100,9 +103,18 @@ export function Home() {
             <a href="/packages" className="text-sm font-medium hover:text-primary transition-colors">Plans & Pricing</a>
             <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">About Jason</a>
           </nav>
-          <Button asChild size="sm" className="hidden md:inline-flex">
-            <a href="#contact" data-testid="link-nav-contact">Get a Quote</a>
-          </Button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggle}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            <Button asChild size="sm" className="hidden md:inline-flex">
+              <a href="#contact" data-testid="link-nav-contact">Get a Quote</a>
+            </Button>
+          </div>
         </div>
       </header>
 
