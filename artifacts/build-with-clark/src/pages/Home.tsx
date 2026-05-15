@@ -97,6 +97,7 @@ export function Home() {
             <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">How it works</a>
             <a href="#pricing" className="text-sm font-medium hover:text-primary transition-colors">Why me?</a>
             <a href="#capabilities" className="text-sm font-medium hover:text-primary transition-colors">What I build</a>
+            <a href="/packages" className="text-sm font-medium hover:text-primary transition-colors">Plans & Pricing</a>
             <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">About Jason</a>
           </nav>
           <Button asChild size="sm" className="hidden md:inline-flex">
@@ -240,6 +241,11 @@ export function Home() {
                       <div className="text-3xl font-bold text-primary mb-2">Low Price</div>
                       <p className="text-sm text-muted-foreground">Typically 40-60% less than what local agencies charge for the exact same quality of work.</p>
                     </div>
+                  </div>
+                  <div className="pt-4">
+                    <Button asChild size="lg" className="font-bold">
+                      <a href="/packages">See all plans &amp; pricing →</a>
+                    </Button>
                   </div>
                 </div>
               </div>

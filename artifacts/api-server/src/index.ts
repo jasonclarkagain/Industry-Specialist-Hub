@@ -1,5 +1,36 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { runMigrations } from "stripe-replit-sync";
+import { getStripeSync } from "./stripeClient";
+
+async function initStripe() {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    throw new Error("DATABASE_URL is required for Stripe integration.");
+  }
+
+  try {
+    logger.info("Initializing Stripe schema...");
+    await runMigrations({ databaseUrl, schema: "stripe" });
+    logger.info("Stripe schema ready");
+
+    const stripeSync = await getStripeSync();
+
+    const webhookBaseUrl = `https://${process.env.REPLIT_DOMAINS?.split(",")[0]}`;
+    await stripeSync.findOrCreateManagedWebhook(
+      `${webhookBaseUrl}/api/stripe/webhook`,
+    );
+    logger.info("Stripe webhook configured");
+
+    stripeSync.syncBackfill().then(() => {
+      logger.info("Stripe data synced");
+    }).catch((err: unknown) => {
+      logger.error({ err }, "Stripe backfill error");
+    });
+  } catch (err) {
+    logger.error({ err }, "Failed to initialize Stripe — payments unavailable");
+  }
+}
 
 const rawPort = process.env["PORT"];
 
@@ -14,6 +45,8 @@ const port = Number(rawPort);
 if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
+
+await initStripe();
 
 app.listen(port, (err) => {
   if (err) {

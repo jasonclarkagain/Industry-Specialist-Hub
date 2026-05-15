@@ -1,6 +1,6 @@
-# [Project name]
+# Build With Clark
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A professional web design services landing page for Jason Clark targeting small businesses and everyday people who need websites — built to share on KSL and Facebook Marketplace.
 
 ## Run & Operate
 
@@ -22,7 +22,17 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- Frontend: `artifacts/build-with-clark/src/`
+  - Pages: `Home.tsx`, `Packages.tsx`, `CheckoutSuccess.tsx`, `CheckoutCancel.tsx`
+  - Components: `PreviewGenerator.tsx`, `HeroScene.tsx`, `TechGlobe.tsx`
+- API routes: `artifacts/api-server/src/routes/`
+  - `preview-generator.ts` — AI page preview (OpenAI)
+  - `download.ts` — HTML page export (`/api/generate-page`)
+  - `stripe.ts` — Packages catalog + checkout (`/api/packages-with-prices`, `/api/checkout`)
+  - `contact.ts` — Contact form submissions
+- Stripe: `artifacts/api-server/src/stripeClient.ts`, `stripeService.ts`, `storage.ts`, `webhookHandlers.ts`
+- DB schema: `lib/db/src/schema/` — `contacts.ts`, `users.ts`
+- Seed script: `scripts/src/seed-products.ts`
 
 ## Architecture decisions
 
@@ -30,7 +40,17 @@ _Populate as you build — non-obvious choices a reader couldn't infer from the 
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+- **Landing page** with hero, how-it-works, value prop, capabilities (3D globe), AI preview generator, about, and contact form
+- **AI live demo**: visitors type their business name → AI generates a real mini preview → they can download it as a standalone HTML file (`/api/generate-page`)
+- **Packages catalog** (`/packages`): 3 one-time site builds + 3 monthly webmaster retainer plans, purchasable via Stripe Checkout
+- **Stripe payments**: fully integrated with webhooks, backfill sync, and checkout sessions
+
+## Stripe Activation Steps
+
+After connecting Stripe in the Integrations tab:
+1. Run `pnpm --filter @workspace/scripts run seed-products` to create the 6 packages in Stripe
+2. Restart the API server workflow — it will sync products and configure webhooks automatically
+3. The `/packages` page will populate with real pricing cards and working Buy buttons
 
 ## User preferences
 
