@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: contact
+    description: Contact form submissions
 paths:
   /healthz:
     get:
@@ -24,6 +26,45 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit contact form
+      description: Accepts a contact form submission from a potential client
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "201":
+          description: Submission received
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactSubmission"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      operationId: listContacts
+      tags: [contact]
+      summary: List contact submissions
+      description: Returns all contact form submissions
+      responses:
+        "200":
+          description: List of submissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactSubmission"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +74,65 @@ components:
           type: string
       required:
         - status
-
+    ContactInput:
+      type: object
+      required:
+        - name
+        - email
+        - message
+        - projectType
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+          maxLength: 200
+        phone:
+          type: ["string", "null"]
+          maxLength: 30
+        message:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        projectType:
+          type: string
+          enum:
+            - "Brand new website"
+            - "Redesign existing site"
+            - "Add features to my site"
+            - "Not sure yet"
+    ContactSubmission:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - message
+        - projectType
+        - createdAt
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        message:
+          type: string
+        projectType:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string

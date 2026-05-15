@@ -1,0 +1,14 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "QgnXki7V1N0weiJNI89vy"
+uri = "file://artifacts/build-with-clark/public/hero-workspace.png"
+type = "image"
+title = "Craftsman web design workspace hero"
+
+[[generated]]
+id = "_zYk5_g_ZAcRQLzmR93Z8"
+uri = "file://artifacts/build-with-clark/public/jason-portrait.png"
+type = "image"
+title = "Friendly web designer portrait"
