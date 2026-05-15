@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, Monitor, Phone, Wrench, ShieldCheck, Mail, ArrowRight, Zap, ShoppingCart, Bot, Smartphone, Database, Globe } from "lucide-react";
 
 import { PreviewGenerator } from "@/components/PreviewGenerator";
+import { HeroScene } from "@/components/HeroScene";
+import { TechGlobe } from "@/components/TechGlobe";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -106,6 +108,7 @@ export function Home() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="px-4 py-16 md:py-24 lg:py-32 bg-primary text-primary-foreground relative overflow-hidden">
+          <HeroScene />
           <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
           <div className="container px-4 md:px-6 relative z-10">
             <div className="grid gap-12 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_600px] items-center">
@@ -343,17 +346,46 @@ export function Home() {
         </section>
 
         {/* What I Can Build Section */}
-        <section id="capabilities" className="py-20 md:py-32 bg-muted">
+        <section id="capabilities" className="py-20 md:py-32 bg-muted overflow-hidden">
           <div className="container px-4 md:px-6">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            {/* Globe + heading side by side on desktop */}
+            <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -24 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.7 }}
               >
                 <h2 className="text-3xl md:text-5xl font-bold font-serif text-primary mb-6">Whatever your business needs, I can build it.</h2>
                 <p className="text-xl text-muted-foreground">Here's a plain-English look at the kinds of sites and tools I build. No tech talk — just what it means for you and your customers.</p>
+              </motion.div>
+
+              <motion.div
+                className="relative h-72 lg:h-96"
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.15 }}
+                aria-hidden="true"
+              >
+                <TechGlobe />
+                {/* Orbiting tech-stack labels */}
+                {[
+                  { label: "React", top: "12%", left: "8%" },
+                  { label: "Rust", top: "65%", left: "4%" },
+                  { label: "Go", top: "22%", right: "6%" },
+                  { label: "PostgreSQL", top: "72%", right: "2%" },
+                  { label: "Next.js", top: "44%", left: "2%" },
+                  { label: "AI / LLM", top: "48%", right: "4%" },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="absolute font-mono text-xs font-bold text-primary/60 bg-background/80 border border-border rounded-full px-2.5 py-0.5 backdrop-blur-sm shadow-sm pointer-events-none"
+                    style={{ top: item.top, left: item.left, right: item.right }}
+                  >
+                    {item.label}
+                  </div>
+                ))}
               </motion.div>
             </div>
 
