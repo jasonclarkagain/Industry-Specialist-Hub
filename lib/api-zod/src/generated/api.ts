@@ -18,6 +18,37 @@ export const HealthCheckResponse = zod.object({
 
 
 /**
+ * Uses AI to generate a mini landing page concept for a business
+ * @summary Generate a landing page preview
+ */
+export const generatePreviewBodyBusinessNameMax = 100;
+
+export const generatePreviewBodyBusinessTypeMax = 100;
+
+export const generatePreviewBodyTaglineMax = 200;
+
+
+
+export const GeneratePreviewBody = zod.object({
+  "businessName": zod.string().min(1).max(generatePreviewBodyBusinessNameMax),
+  "businessType": zod.string().min(1).max(generatePreviewBodyBusinessTypeMax),
+  "tagline": zod.string().max(generatePreviewBodyTaglineMax).nullish()
+})
+
+export const GeneratePreviewResponse = zod.object({
+  "headline": zod.string(),
+  "subheadline": zod.string(),
+  "description": zod.string(),
+  "services": zod.array(zod.object({
+  "title": zod.string(),
+  "description": zod.string()
+})),
+  "callToAction": zod.string(),
+  "accentColor": zod.string()
+})
+
+
+/**
  * Accepts a contact form submission from a potential client
  * @summary Submit contact form
  */

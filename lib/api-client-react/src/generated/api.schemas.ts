@@ -9,6 +9,38 @@ export interface HealthStatus {
   status: string;
 }
 
+export interface PreviewGeneratorInput {
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  businessName: string;
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  businessType: string;
+  /**
+     * @maxLength 200
+     * @nullable
+     */
+  tagline?: string | null;
+}
+
+export type PreviewGeneratorResultServicesItem = {
+  title: string;
+  description: string;
+};
+
+export interface PreviewGeneratorResult {
+  headline: string;
+  subheadline: string;
+  description: string;
+  services: PreviewGeneratorResultServicesItem[];
+  callToAction: string;
+  accentColor: string;
+}
+
 export type ContactInputProjectType = typeof ContactInputProjectType[keyof typeof ContactInputProjectType];
 
 

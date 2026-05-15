@@ -23,7 +23,9 @@ import type {
   ContactInput,
   ContactSubmission,
   ErrorResponse,
-  HealthStatus
+  HealthStatus,
+  PreviewGeneratorInput,
+  PreviewGeneratorResult
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
@@ -115,6 +117,78 @@ export function useHealthCheck<TData = Awaited<ReturnType<typeof healthCheck>>, 
 
 
 
+
+export const getGeneratePreviewUrl = () => {
+
+
+
+
+  return `/api/preview-generator`
+}
+
+/**
+ * Uses AI to generate a mini landing page concept for a business
+ * @summary Generate a landing page preview
+ */
+export const generatePreview = async (previewGeneratorInput: PreviewGeneratorInput, options?: RequestInit): Promise<PreviewGeneratorResult> => {
+
+  return customFetch<PreviewGeneratorResult>(getGeneratePreviewUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      previewGeneratorInput,)
+  }
+);}
+
+
+
+
+export const getGeneratePreviewMutationOptions = <TError = ErrorType<ErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generatePreview>>, TError,{data: BodyType<PreviewGeneratorInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof generatePreview>>, TError,{data: BodyType<PreviewGeneratorInput>}, TContext> => {
+
+const mutationKey = ['generatePreview'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof generatePreview>>, {data: BodyType<PreviewGeneratorInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  generatePreview(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GeneratePreviewMutationResult = NonNullable<Awaited<ReturnType<typeof generatePreview>>>
+    export type GeneratePreviewMutationBody = BodyType<PreviewGeneratorInput>
+    export type GeneratePreviewMutationError = ErrorType<ErrorResponse>
+
+    /**
+ * @summary Generate a landing page preview
+ */
+export const useGeneratePreview = <TError = ErrorType<ErrorResponse>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generatePreview>>, TError,{data: BodyType<PreviewGeneratorInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof generatePreview>>,
+        TError,
+        {data: BodyType<PreviewGeneratorInput>},
+        TContext
+      > => {
+      return useMutation(getGeneratePreviewMutationOptions(options));
+    }
 
 export const getSubmitContactUrl = () => {
 

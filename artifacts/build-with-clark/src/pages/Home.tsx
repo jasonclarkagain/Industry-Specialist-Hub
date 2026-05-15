@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2, Monitor, Phone, Wrench, ShieldCheck, Mail, ArrowRight, Zap, ShoppingCart, Bot, Smartphone, Database, Globe } from "lucide-react";
 
+import { PreviewGenerator } from "@/components/PreviewGenerator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -445,6 +446,8 @@ export function Home() {
             </motion.div>
           </div>
         </section>
+
+        <PreviewGenerator />
 
         {/* CTA / Form Section */}
         <section id="contact" className="py-20 md:py-32 bg-primary text-primary-foreground relative overflow-hidden">

@@ -11,3 +11,6 @@ export * from './contactInputProjectType';
 export * from './contactSubmission';
 export * from './errorResponse';
 export * from './healthStatus';
+export * from './previewGeneratorInput';
+export * from './previewGeneratorResult';
+export * from './previewGeneratorResultServicesItem';

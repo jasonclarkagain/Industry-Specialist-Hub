@@ -26,6 +26,31 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /preview-generator:
+    post:
+      operationId: generatePreview
+      tags: [preview]
+      summary: Generate a landing page preview
+      description: Uses AI to generate a mini landing page concept for a business
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PreviewGeneratorInput"
+      responses:
+        "200":
+          description: Generated preview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PreviewGeneratorResult"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /contact:
     post:
       operationId: submitContact
@@ -74,6 +99,55 @@ components:
           type: string
       required:
         - status
+    PreviewGeneratorInput:
+      type: object
+      required:
+        - businessName
+        - businessType
+      properties:
+        businessName:
+          type: string
+          minLength: 1
+          maxLength: 100
+        businessType:
+          type: string
+          minLength: 1
+          maxLength: 100
+        tagline:
+          type: ["string", "null"]
+          maxLength: 200
+    PreviewGeneratorResult:
+      type: object
+      required:
+        - headline
+        - subheadline
+        - description
+        - services
+        - callToAction
+        - accentColor
+      properties:
+        headline:
+          type: string
+        subheadline:
+          type: string
+        description:
+          type: string
+        services:
+          type: array
+          items:
+            type: object
+            required:
+              - title
+              - description
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+        callToAction:
+          type: string
+        accentColor:
+          type: string
     ContactInput:
       type: object
       required:
