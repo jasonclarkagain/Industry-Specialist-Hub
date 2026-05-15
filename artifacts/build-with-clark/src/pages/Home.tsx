@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CheckCircle2, ChevronRight, Monitor, Phone, Wrench, ShieldCheck, Mail, ArrowRight } from "lucide-react";
+import { CheckCircle2, Monitor, Phone, Wrench, ShieldCheck, Mail, ArrowRight, Zap, ShoppingCart, Bot, Smartphone, Database, Globe } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -93,6 +93,7 @@ export function Home() {
           <nav className="hidden md:flex gap-6">
             <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">How it works</a>
             <a href="#pricing" className="text-sm font-medium hover:text-primary transition-colors">Why me?</a>
+            <a href="#capabilities" className="text-sm font-medium hover:text-primary transition-colors">What I build</a>
             <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">About Jason</a>
           </nav>
           <Button asChild size="sm" className="hidden md:inline-flex">
@@ -337,6 +338,111 @@ export function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* What I Can Build Section */}
+        <section id="capabilities" className="py-20 md:py-32 bg-muted">
+          <div className="container px-4 md:px-6">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-3xl md:text-5xl font-bold font-serif text-primary mb-6">Whatever your business needs, I can build it.</h2>
+                <p className="text-xl text-muted-foreground">Here's a plain-English look at the kinds of sites and tools I build. No tech talk — just what it means for you and your customers.</p>
+              </motion.div>
+            </div>
+
+            <motion.div
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+              }}
+            >
+              {[
+                {
+                  icon: Globe,
+                  title: "A site that looks great everywhere",
+                  description: "Whether your customer is on their phone, tablet, or computer, your site will look sharp and be easy to use. No pinching and zooming, no cut-off text.",
+                  techNote: "Responsive design · React · Modern CSS",
+                  testId: "card-capability-responsive"
+                },
+                {
+                  icon: Zap,
+                  title: "Sites that load instantly",
+                  description: "I can build sites that are genuinely fast — we're talking under a second to load. Slow sites lose customers. Google also ranks fast sites higher.",
+                  techNote: "Go · Rust · Edge-optimized backends",
+                  testId: "card-capability-fast"
+                },
+                {
+                  icon: ShoppingCart,
+                  title: "Online stores that take payments",
+                  description: "Sell your products or services online. Customers can browse, add to cart, and pay — all without you having to do anything after setup.",
+                  techNote: "E-commerce · Stripe · Inventory management",
+                  testId: "card-capability-ecommerce"
+                },
+                {
+                  icon: Bot,
+                  title: "A chat assistant for your customers",
+                  description: "Imagine having someone available 24/7 to answer questions from your website visitors — even while you're asleep. I can build that into your site.",
+                  techNote: "AI integration · Chatbot · Real-time chat",
+                  testId: "card-capability-ai"
+                },
+                {
+                  icon: Database,
+                  title: "Sites that remember your customers",
+                  description: "Need people to make accounts, book appointments, or check their order history? I build sites with login systems, databases, and all the behind-the-scenes stuff that makes that work.",
+                  techNote: "Full-stack · PostgreSQL · User accounts",
+                  testId: "card-capability-fullstack"
+                },
+                {
+                  icon: Smartphone,
+                  title: "Apps for their phone",
+                  description: "If you want something your customers can download from the App Store or Google Play, I can build that too. A real app, with your name and logo on it.",
+                  techNote: "iOS · Android · React Native",
+                  testId: "card-capability-mobile"
+                },
+              ].map((item) => (
+                <motion.div
+                  key={item.testId}
+                  data-testid={item.testId}
+                  variants={{
+                    hidden: { opacity: 0, y: 24 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+                  }}
+                  className="bg-background rounded-2xl p-8 border border-border shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                >
+                  <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-5 flex-shrink-0">
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold font-serif text-foreground mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed flex-1">{item.description}</p>
+                  <div className="mt-6 pt-5 border-t border-border">
+                    <p className="text-xs text-muted-foreground/60 font-mono tracking-wide">{item.techNote}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-center mt-14"
+            >
+              <p className="text-lg text-muted-foreground mb-6">Don't see exactly what you need? Just ask. If it runs on the internet, I can probably build it.</p>
+              <Button size="lg" asChild data-testid="button-capabilities-contact">
+                <a href="#contact">Tell me what you need <ArrowRight className="ml-2 h-5 w-5" /></a>
+              </Button>
+            </motion.div>
           </div>
         </section>
 
