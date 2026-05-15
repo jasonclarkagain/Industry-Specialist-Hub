@@ -56,6 +56,10 @@ After connecting Stripe in the Integrations tab:
 
 _Populate as you build — explicit user instructions worth remembering across sessions._
 
+## Future ideas (not yet started)
+
+- **Visual website builder**: A drag-and-drop site builder (think Wix/Squarespace, but simpler and more impressive to use) — customers pick a layout, fill in their info, and get a real site. Jason wants this to feel super easy and polished. Build this when ready.
+
 ## Gotchas
 
 _Populate as you build — sharp edges, "always run X before Y" rules._
